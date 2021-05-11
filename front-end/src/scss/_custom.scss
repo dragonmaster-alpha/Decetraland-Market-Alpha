@@ -1,0 +1,248 @@
+// Here you can add other styles
+#root {
+    background: #18141A;
+}
+
+.homepage {
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid rgba(103,99,112,0.2);
+    overflow: hidden;
+    padding: 64px;
+    margin-bottom: 44px;
+    width: 100%;
+    flex-flow: column nowrap;
+    position: relative;
+}
+
+.home-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+.home-back-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-image: url('../assets/img/home.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.homepage-title {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: .4px;
+    font-weight: 500;
+    color: white;
+    margin: calc(2rem - .14286em) 0 1rem;
+}
+
+.homepage-sub-title {
+    margin-bottom: 24px;
+    color: #676370;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+}
+
+@media only screen and (min-width: 1200px) {
+  .c-app .container {
+    width: 1064px;
+    margin: 0 auto;
+  }
+}
+  
+@media (max-width: 768px) {
+  .c-app .container {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+}
+
+a:hover {
+  color: white;
+}
+
+.bg-black {
+    background-color: #18141A;
+}
+
+.bg-dark-black {
+    background-color: #676370;
+}
+
+.border-dark-black {
+    border-color: #4b4852;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #4b4852;
+}
+
+.load-div{
+    position: absolute;
+    top: 10px;
+}
+
+.padding-64 {
+    padding: 0 64px;
+}
+
+.logo-bkg {
+  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzZweCIgaGVpZ2h0PSIzNnB4IiB2aWV3Qm94PSIwIDAgMzYgMzYiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDUzICg3MjUyMCkgLSBodHRwczovL3NrZXRjaGFwcC5jb20gLS0+CiAgICA8dGl0bGU+MzY8L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZGVmcz4KICAgICAgICA8bGluZWFyR3JhZGllbnQgeDE9Ijg1LjM1NTM1JSIgeTE9IjE0LjY0NDY3NSUiIHgyPSIxNC42NDQ2NzUlIiB5Mj0iODUuMzU1MzUlIiBpZD0ibGluZWFyR3JhZGllbnQtMSI+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNGRjJENTUiIG9mZnNldD0iMCUiPjwvc3RvcD4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0ZGQkM1QiIgb2Zmc2V0PSIxMDAlIj48L3N0b3A+CiAgICAgICAgPC9saW5lYXJHcmFkaWVudD4KICAgICAgICA8bGluZWFyR3JhZGllbnQgeDE9IjQ5Ljk2NjQlIiB5MT0iNi42NjY2NjY2N2UtMDUlIiB4Mj0iNDkuOTY2NCUiIHkyPSIxMDAuMDAwMDY3JSIgaWQ9ImxpbmVhckdyYWRpZW50LTIiPgogICAgICAgICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjQTUyNEIzIiBvZmZzZXQ9IjAlIj48L3N0b3A+CiAgICAgICAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiNGRjJENTUiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICAgICAgPGxpbmVhckdyYWRpZW50IHgxPSI0OS45NjY0JSIgeTE9IjYuNjY2NjY2NjdlLTA1JSIgeDI9IjQ5Ljk2NjQlIiB5Mj0iMTAwLjAwMDA2NyUiIGlkPSJsaW5lYXJHcmFkaWVudC0zIj4KICAgICAgICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iI0E1MjRCMyIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICAgICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjRkYyRDU1IiBvZmZzZXQ9IjEwMCUiPjwvc3RvcD4KICAgICAgICA8L2xpbmVhckdyYWRpZW50PgogICAgPC9kZWZzPgogICAgPGcgaWQ9InVpLWtpdCIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgaWQ9ImxvZ28iIHRyYW5zZm9ybT0idHJhbnNsYXRlKC04MjQuMDAwMDAwLCAtMjU0LjAwMDAwMCkiPgogICAgICAgICAgICA8ZyBpZD0iY29sb3IiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyOC4wMDAwMDAsIDEyOC4wMDAwMDApIj4KICAgICAgICAgICAgICAgIDxnIGlkPSIzNiIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNjk2LjAwMDAwMCwgMTI2LjAwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgaWQ9IndvcmxkIiBmaWxsPSJ1cmwoI2xpbmVhckdyYWRpZW50LTEpIiBjeD0iMTgiIGN5PSIxOCIgcj0iMTgiPjwvY2lyY2xlPgogICAgICAgICAgICAgICAgICAgIDxnIGlkPSJiaWctcHlyYW1pZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMS40NDAwMDAsIDExLjcwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0ic2hhZG93IiBmaWxsPSJ1cmwoI2xpbmVhckdyYWRpZW50LTIpIiBwb2ludHM9IjExLjMxMyAwIDExLjMxMyAxMy41IDIyLjU2MyAxMy41Ij48L3BvbHlnb24+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJsaWdodCIgZmlsbD0iI0ZGRkZGRiIgcG9pbnRzPSIwLjA2MyAxMy41IDExLjMxMyAxMy41IDExLjMxMyAwIj48L3BvbHlnb24+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik03LjIsMzIuNCBDMTAuMjA2LDM0LjY1OSAxMy45NSwzNiAxOCwzNiBDMjIuMDUsMzYgMjUuNzk0LDM0LjY1OSAyOC44LDMyLjQgTDcuMiwzMi40IFoiIGlkPSJlbmQiIGZpbGw9IiNGRjJENTUiPjwvcGF0aD4KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMy42LDI4LjggQzQuNjI2LDMwLjE1OSA1Ljg0MSwzMS4zNzQgNy4yLDMyLjQgTDI4LjgsMzIuNCBDMzAuMTU5LDMxLjM3NCAzMS4zNzQsMzAuMTU5IDMyLjQsMjguOCBMMy42LDI4LjggWiIgaWQ9Imhvcml6b24iIGZpbGw9IiNGQzk5NjUiPjwvcGF0aD4KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMjQuMTQ3LDI1LjIgTDEuNTAzLDI1LjIgQzIuMDYxLDI2LjQ4NyAyLjc3MiwyNy42OTMgMy42LDI4LjggTDI0LjE1NiwyOC44IEwyNC4xNTYsMjUuMiBMMjQuMTQ3LDI1LjIgWiIgaWQ9Imdyb3VuZCIgZmlsbD0iI0ZGQkM1QiI+PC9wYXRoPgogICAgICAgICAgICAgICAgICAgIDxnIGlkPSJzbWFsbC1weXJhbWlkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNS44NDAwMDAsIDE4LjkwMDAwMCkiPgogICAgICAgICAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0ic2hhZG93IiBmaWxsPSJ1cmwoI2xpbmVhckdyYWRpZW50LTMpIiBwb2ludHM9IjguMzA3IDAgOC4zMDcgOS45IDE2LjU2IDkuOSI+PC9wb2x5Z29uPgogICAgICAgICAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0ibGlnaHQiIGZpbGw9IiNGRkZGRkYiIHBvaW50cz0iMC4wNjMgOS45IDguMzA3IDkuOSA4LjMwNyAwIj48L3BvbHlnb24+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgaWQ9ImJpZy1tb29uIiBmaWxsPSIjRkZDOTVCIiBjeD0iMjQuMTQ3IiBjeT0iMTEuNyIgcj0iNC41Ij48L2NpcmNsZT4KICAgICAgICAgICAgICAgICAgICA8Y2lyY2xlIGlkPSJzbWFsbC1tb29uIiBmaWxsPSIjRkZDOTVCIiBjeD0iMTIuNzUzIiBjeT0iNi43NSIgcj0iMi4yNSI+PC9jaXJjbGU+CiAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg==);
+  display: inline-block;
+  border-radius: 100%;
+  background-size: contain;
+  width: 36px;
+  height: 36px;
+}
+
+.footer-text-color {
+  color: #676370;
+}
+
+a.text-dark:hover, a.text-dark:focus {
+  color: white !important;
+}
+
+@media (max-width: 768px) {
+  .logo-bkg {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+.dropdown-toggle {
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 2px;
+    min-height: 36px;
+    width: 220px;
+}
+
+.dropdown-menu{
+    width: 220px;
+}
+
+.dropdown-toggle:hover {
+    border: 1px solid #0074d9;
+}
+
+.dropdown-more {
+    padding: 9px 15px;
+    cursor: pointer;
+    color: #4f5d73;
+}
+
+.active-dropdown{
+    background-color: #b6d1f9;
+}
+
+.dropdown-collapse-icon{
+    float: right;
+    margin-top: 3px;
+}
+
+.dropdown-report{
+    color: #fff;
+}
+
+.dropdown-report:hover {
+    background-color: #0074d9;
+    color: #fff;
+}
+
+.dropdown-report:active {
+    background-color: #0074d9;
+    color: #fff;
+}
+
+.browse-pack {
+    position: relative;
+    font-weight: 400;
+    z-index: 15;
+}
+
+.browse-pack > .btn-browse {
+    margin-top: 16px;
+    padding: 12px 32px;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 18px;
+    min-width: 128px;
+    font-weight: 600;
+    transition: transform .2s ease-in-out,background-color .2s ease-in-out;
+    text-transform: uppercase;
+}
+
+.slide-show{
+    margin-bottom: 70px;
+    width: 100%;
+}
+
+.slide-show > .header-menu {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.header-menu > .header-menu-title {
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
+}
+
+.header-menu > .title-style {
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+    color: white;
+}
+
+.header-menu > .header-menu-view-all {
+    display: flex;
+    align-items: center;
+}
+
+.slide-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    width: 220px;
+    flex: 0 0 auto;
+    width: 220px;
+    margin-right: 20px;
+    height: 300px;
+    margin-top: 12px;
+    transition: transform .2s ease-in-out,box-shadow .2s ease-in-out;
+    transform: translateY(0);
+    border-radius: 8px;
+    margin: 1em 0;
+    background: #242129;
+}
+
+.slide-container:hover {
+    box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.24);
+    transform: translateY(-4px);
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.slide-container > .card-image {
+    border-radius: .28571429rem .28571429rem 0 0!important;
+    border-top: none!important;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    width: 100%;
+
+}
