@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 // routes config
 import routes from '../routes'
 import CIcon from '@coreui/icons-react'
+import EachSlider from './EachSlide'
 
 const SlideShow = (props) => {
   return (
@@ -23,7 +24,13 @@ const SlideShow = (props) => {
             </Link>
             </div>
         </div>
-        <div className="slides-container"></div>
+        <div className="slides-container">
+            <EachSlider title="Tech Tribal Bird Mask" price="1200" desc="Exprires in 3 months" />
+            <EachSlider title="Tech Tribal Bird Mask" price="1200" desc="Exprires in 3 months" />
+            <EachSlider title="Tech Tribal Bird Mask" price="1200" desc="Exprires in 3 months" />
+            <EachSlider title="Tech Tribal Bird Mask" price="1200" desc="Exprires in 3 months" />
+            <EachSlider title="Tech Tribal Bird Mask" price="1200" desc="Exprires in 3 months" />
+        </div>
       </div>
   )
 }

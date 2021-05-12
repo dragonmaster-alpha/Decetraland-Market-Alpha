@@ -34,6 +34,24 @@ export default {
       }
   },
 
+  card(url = 'card') {
+    const config = {
+      headers: {
+        'authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    };
+
+    return {
+        fetchAll: () => http.get(url + '/list', config),
+        fetchPagination: (page, limit) => 
+            http.get(url + "?page=" + page + "&limit=" + limit, config),
+        fetchById: id => http.get(url + "/" + id, config),
+        create: ({card_name, card_desc, card_price}) => http.post(url, {card_name, card_desc, card_price}, config),
+        update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
+        delete: id => http.delete(url + "/" + id, config)
+    }
+},
+
   track(url = 'track') {
     const config = {
       headers: {

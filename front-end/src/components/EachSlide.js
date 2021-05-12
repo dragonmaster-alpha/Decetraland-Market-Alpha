@@ -16,11 +16,12 @@ import CIcon from '@coreui/icons-react'
 
 const EachSlide = (props) => {
   return (
-      <Link to="/card/{props.id}" className="slide-container">
+      <Link to="/card/{props.id}" className="slide-container text-decoration-none text-white">
         <div className="card-image">
             <CImg
-                src={'avatars/user-avatar.png'}
+                src={'background/thumbnail.jpg'}
                 alt="thumbnail"
+                className="full-image"
             />
         </div>
         <div className="card-info">

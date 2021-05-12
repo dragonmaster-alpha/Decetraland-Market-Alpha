@@ -1,6 +1,20 @@
 // Here you can add other styles
-#root {
-    background: #18141A;
+#root, .c-app {
+    background-color: #18141A;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba(255,255,255,.25);
+    -webkit-transition: color .2s ease;
+    transition: color .2s ease;
 }
 
 .homepage {
@@ -212,15 +226,22 @@ a.text-dark:hover, a.text-dark:focus {
     align-items: center;
 }
 
+.slides-container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+    position: relative;
+    min-height: 336px;
+}
+
 .slide-container {
     position: relative;
     display: flex;
     flex-direction: column;
     padding: 0;
-    width: 220px;
     flex: 0 0 auto;
     width: 220px;
-    margin-right: 20px;
+    margin-right: 20px!important;
     height: 300px;
     margin-top: 12px;
     transition: transform .2s ease-in-out,box-shadow .2s ease-in-out;
@@ -231,18 +252,203 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .slide-container:hover {
-    box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.24);
     transform: translateY(-4px);
     cursor: pointer;
-    border: 1px solid rgba(0,0,0,0.02);
 }
 
 .slide-container > .card-image {
     border-radius: .28571429rem .28571429rem 0 0!important;
     border-top: none!important;
-    overflow: hidden;
     position: relative;
     height: 100%;
     width: 100%;
 
+}
+
+.full-image {
+    margin: auto;
+    text-align: center;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.card-info {
+    display: flex;
+    padding: 16px 20px;
+    flex-flow: column nowrap;
+}
+
+.slide-container > .card-header {
+    display: flex;
+    margin-bottom: 4px;
+    font-size: 17px;
+    line-height: 26px;
+    letter-spacing: -.2px;
+    font-weight: 500;
+    color: white;
+    flex: 1 0 auto;
+}
+
+.card-header > .card-title {
+    flex: 1 2 auto;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-right: 20px;
+}
+
+.card-header > .card-price {
+    margin: 0;
+    flex: none;
+    font-size: 17px;
+    line-height: 26px;
+    letter-spacing: -.2px;
+    display: inline;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    color: inherit;
+    font-weight: 500;
+}
+
+.slide-container > .card-desc {
+    margin-bottom: 4px;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 400;
+    letter-spacing: normal;
+    color: #676370;
+}
+
+.card-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 246px;
+    height: 182px;
+}
+
+.card-container > .game-card-image-image {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: .3;
+    width: 100%;
+    height: 100%;
+}
+
+.game-card-desc {
+    display: flex;
+    flex-direction: column;
+}
+
+.cards-container > .game-card-menu {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 16px;
+}
+
+.game-card-menu > .cards-count {
+    flex: 1 0 auto;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+.game-card-menu > .add-card {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 13px;
+    line-height: 18px;
+    text-transform: uppercase;
+}
+
+.add-card-action {
+    background: url(../assets/img/icons.svg) 68.34532374100719% 99.1515873015873% no-repeat;
+    width: 13px;
+    height: 13px;
+    margin: 0;
+}
+
+.add-card-link {
+    width: 16px;
+    height: 16px;
+    box-sizing: initial;
+    padding: 5px 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(115,110,125,0.4);
+}
+
+.add-card-modal {
+    background: black;
+    opacity: 1;
+}
+
+.modal-content {
+    background: rgb(36,33,41);
+}
+
+.modal-header > .close span {
+    font-size: 30px;
+    color: white;
+}
+
+.modal-header, .modal-body, .modal-footer {
+    padding: 24px;
+    color: white;
+    border-color: rgba(115,110,125,0.4);
+}
+
+.modal-footer {
+    padding: 16px 24px;
+}
+
+.modal-header > .modal-title {
+    font-size: 28px;
+    line-height: 30px;
+    letter-spacing: .3px;
+}
+
+.modal-body > .input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-label {
+    width: 25%;
+}
+
+.modal-body input {
+    border: none;
+    border-bottom: 2px solid rgba(103,99,112,0.2);
+    background: transparent;
+    padding: 8px 0;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.modal-body .input-group label {
+    margin-bottom: 0;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.modal-body input:hover, .modal-body input:active, .modal-body input:focus, .modal-body input:visited{
+    border: none;;
+    background: transparent;
+    padding: 8px 0;
+    border-bottom: 2px solid white;
+}
+
+.modal-body input:focus {
+    color: white;
 }

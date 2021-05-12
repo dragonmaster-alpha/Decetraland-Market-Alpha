@@ -71,16 +71,27 @@ exports.findOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
+    console.log('create');
+    console.log(req.body.card_name);
+    console.log(req.body.card_price);
+    console.log(req.body.card_desc);
     if(!req.body.card_name || !req.body.card_desc || !req.body.card_price) {
          return res.status(400).send({
              message: "Name, Description and Price can not be empty"
          });
     }
 
+    if (!req.body.user_id) {
+        return res.status(400).send({
+            message: "Please check if you already log in."
+        });
+    }
+
     const card = new Card({
         card_name: req.body.card_name.trim(),
         card_desc: req.body.card_desc.trim(),
-        card_price: req.body.card_price.trim()
+        card_price: req.body.card_price,
+        user_id: req.body.user_id
     });
 
     card.save()
