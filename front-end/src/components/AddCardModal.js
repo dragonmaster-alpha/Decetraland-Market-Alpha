@@ -26,26 +26,40 @@ const AddCardModal = (props) => {
     const [price, setPrice] = useState(props.cPrice);
     const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
+
+    let userId = 0;
     const changeFile = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsFilePicked(true);
 	};
     const createCard = (event) => {
-        console.log(cardname);
-        console.log(description);
-        console.log(parseFloat(price));
+        const usr = localStorage.getItem('authUser');
+        if (usr !== null) {
+            let log_usr = JSON.parse(usr);
+            userId = log_usr.id;
+        }
         console.log(selectedFile);
+        console.log(userId);
         if (!cardname || !description || parseFloat(price) === null) {
             toast.error('Please fill out all the fields');
             return ;
         }
-        let newRecode = {'card_name': cardname, 'card_desc': description, 'card_price': parseFloat(price), 'user_id': props.userId};
-        console.log(newRecode);
-        API.card().create(newRecode).then(res => {
+        const formData = new FormData();
+        formData.append("card_name", cardname);
+        formData.append("card_desc", description);
+        formData.append("card_price", parseFloat(price));
+        formData.append("user_id", userId);
+        formData.append("file", selectedFile);
+        // let newRecode = {'card_name': cardname, 'card_desc': description, 'card_price': parseFloat(price), 'user_id': userId};
+        API.card().create(formData).then(res => {
             // console.log("res : ", JSON.stringify(res.data))
             if (res.status === 200 && res.data) {
-                this.history.push('/builder');
-                props.onHide()
+                setCardname('');
+                setDescription('');
+                setPrice('');
+                history.push('/builder');
+                props.onHide();
+                props.getAddCardList(res.data);
             }
             else {
               toast.error(res.data.message);

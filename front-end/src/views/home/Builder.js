@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 import {
   CButton
 } from '@coreui/react'
@@ -10,18 +11,52 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { Link, useHistory } from "react-router-dom";
 import Card from '../../components/GameCard'
 import AddCardModal from '../../components/AddCardModal';
+import { useSelector, useDispatch } from 'react-redux'
 
 const Builder = () => {
     const history = useHistory();
-    let userId = 0;
     const [modalShow, setModalShow] = React.useState(false);
-    let count = 0;
+    const dispatch = useDispatch();
+    const [update, setUpdate] = React.useState(0);
+    const cardList = useSelector(state => state.cardList);
+
+    const getCardList = () => {
+        let isLoggedIn = false;
+        const usr = localStorage.getItem('authUser');
+        if (usr !== null) {
+            isLoggedIn = true;
+        }
+        const authType = localStorage.getItem('authType');
+        if(authType === 'google' || authType === 'linkedin'){
+            isLoggedIn = true;
+        }
+        if (isLoggedIn) {
+            API.card().loadSubAll()
+            .then(res => {
+                console.log(res.data);
+                dispatch({type: 'set', cardList: res.data});
+            })
+            .catch(err => console.log(err));
+        }
+    }
+
+    const getAddCardList = (data) => {
+        console.log(data);
+        var array = cardList;
+        array.push(data);
+        dispatch({type: 'set', cardList: array});
+        console.log(cardList);
+        setUpdate(1);
+    }
+
+    useEffect(() => {
+        getCardList();
+    }, [])
     const handleClick = () => {
         const usr = localStorage.getItem('authUser');
         let isLoggedIn = false;
         if (usr !== null) {
             let log_usr = JSON.parse(usr);
-            userId = log_usr.id;
             isLoggedIn = true;
         }
         const authType = localStorage.getItem('authType');
@@ -42,7 +77,7 @@ const Builder = () => {
         <div className="cards-container container">
             <div className="game-card-menu">
                 <div className="cards-count">
-                {count} result
+                {cardList.length} result
                 </div>
                 <div className="add-card">
                     <CButton onClick={handleClick} className="add-card-link">
@@ -54,19 +89,34 @@ const Builder = () => {
                         cName='' 
                         cDesc=''
                         cPrice='0'
-                        userId={userId}
+                        getAddCardList={getAddCardList}
                     />
                 </div>
             </div>
             {
-                count && (
-                    <Card title="1" price="1200"/>
+                (cardList.length === 0) && (
+                    <>
+                    <div className="CardList">
+                        <div className="empty-projects">
+                            <div>
+                                It looks like you don't have any Cards.
+                                <br/>
+                                <span onClick={handleClick}>Click here</span> to get started.
+                            </div>
+                        </div>
+                    </div>
+                    </>
                 )
             }
             {
-                !count && (
-                    <>
-                    </>
+                (cardList.length) && (
+                    <div className="card-list">
+                    {
+                        cardList.map((card, idx) => (
+                            <Card key={card.idx} title={card.card_name} price={card.card_price} cid={card.id} imgurl={card.img_url.replace("\\", "/")}/>
+                        ))
+                    }
+                    </div>
                 )
             }
         </div>

@@ -91,7 +91,7 @@ const TheHeader = () => {
 
       {
         isLoggedIn && (
-        <CHeaderNav className="px-3">
+        <CHeaderNav className="pl-3">
           {/* <TheHeaderDropdownNotif/>
           <TheHeaderDropdownTasks/>
           <TheHeaderDropdownMssg/> */}

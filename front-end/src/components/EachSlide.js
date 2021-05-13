@@ -16,13 +16,17 @@ import CIcon from '@coreui/icons-react'
 
 const EachSlide = (props) => {
   return (
-      <Link to="/card/{props.id}" className="slide-container text-decoration-none text-white">
-        <div className="card-image">
-            <CImg
-                src={'background/thumbnail.jpg'}
-                alt="thumbnail"
-                className="full-image"
-            />
+      <Link to={"/card/" + props.cid} className="slide-container text-decoration-none text-white">
+      <div className="cardimage-container">
+        <div className="image-wrapper">
+            <div className="card-image">
+                <CImg
+                    src={`http://localhost:3000/${props.imgurl}`}
+                    alt="thumbnail"
+                    className="full-image"
+                />
+            </div>
+        </div>
         </div>
         <div className="card-info">
             <div className="card-header">

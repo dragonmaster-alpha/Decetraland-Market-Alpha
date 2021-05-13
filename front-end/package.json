@@ -36,6 +36,7 @@
     "classnames": "^2.2.6",
     "core-js": "^3.8.1",
     "enzyme": "^3.11.0",
+    "form-data": "^4.0.0",
     "highcharts": "^9.0.1",
     "highcharts-react-official": "^3.0.0",
     "jwt-decode": "^3.1.2",

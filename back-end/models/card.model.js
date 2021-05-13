@@ -4,7 +4,7 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 // Create Schema
 const CardSchema = new Schema({
   user_id: {
-    type: Number,
+    type: String,
     required: true
   },
   card_name: {
@@ -17,6 +17,10 @@ const CardSchema = new Schema({
   },
   card_price: {
     type: Number,
+    required: true
+  },
+  img_url: {
+    type: String,
     required: true
   },
   status: {

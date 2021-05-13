@@ -22,7 +22,7 @@ exports.login =  async (req, res) => {
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) throw Error('Invalid password');
 
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });
+      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 36000 });
       if (!token) throw Error('Couldnt sign the token');
 
       if (user.status != "Active") {

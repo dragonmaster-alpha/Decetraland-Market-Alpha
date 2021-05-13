@@ -1,4 +1,8 @@
 import Card from '../models/card.model'
+const fs = require('fs');
+const path = require('path');
+const multer = require("multer");
+const multiparty = require('multiparty');
 
 const cardsSerializer = data => ({
     id: data.id,
@@ -6,6 +10,7 @@ const cardsSerializer = data => ({
     card_name: data.card_name,
     card_desc: data.card_desc,
     card_price: data.card_price,
+    img_url: data.img_url,
     register_date: data.register_date
 });
 
@@ -14,6 +19,22 @@ exports.findAll =  (req, res) => {
     Card.find()
     .then(async data => {
         const cards = await Promise.all(data.map(cardsSerializer));
+        res.send(cards);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving scenes."
+        });
+    });
+};
+
+
+// Retrieve all data
+exports.findAllByUserID =  (req, res) => {
+    console.log(req.headers);
+    Card.find({user_id: req.user.id})
+    .then(async data => {
+        const cards = await Promise.all(data.map(cardsSerializer));
+        console.log(cards);
         res.send(cards);
     }).catch(err => {
         res.status(500).send({
@@ -71,38 +92,150 @@ exports.findOne = (req, res) => {
 };
 
 exports.create = (req, res) => {
-    console.log('create');
-    console.log(req.body.card_name);
-    console.log(req.body.card_price);
-    console.log(req.body.card_desc);
-    if(!req.body.card_name || !req.body.card_desc || !req.body.card_price) {
-         return res.status(400).send({
-             message: "Name, Description and Price can not be empty"
-         });
-    }
+    let form = new multiparty.Form();
+    var cardName, cardPrice, cardDesc, userId, file;
 
-    if (!req.body.user_id) {
-        return res.status(400).send({
-            message: "Please check if you already log in."
-        });
-    }
-
-    const card = new Card({
-        card_name: req.body.card_name.trim(),
-        card_desc: req.body.card_desc.trim(),
-        card_price: req.body.card_price,
-        user_id: req.body.user_id
+    const storage = multer.diskStorage({
+        destination: "./uploads/",
+        filename: function(req, file, cb){
+        cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+        }
     });
+    
+    const upload = multer({
+        storage: storage,
+        limits:{fileSize: 1000000},
+    }).fields([
+        { name: 'file', maxCount: 1 }, 
+    ]);
 
-    card.save()
-    .then(data => {
-        const card = cardsSerializer(data)
-        res.send(card);
-    }).catch(err => {
-        res.status(500).send({
-            message: err.message || "Some error occurred while creating the Card."
-        });
-    });
+    upload(req, res, function(err) {
+        var generatedFilePath = req.files['file'][0]['path'];
+        if (err) {
+            // ...
+        } 
+
+        // Get posted data:
+        if(!req.body.card_name || !req.body.card_desc || !req.body.card_price) {
+            return res.status(400).send({
+                message: "Name, Description and Price can not be empty"
+            });
+       }
+   
+       if (!req.body.user_id) {
+           return res.status(400).send({
+               message: "Please check if you already log in."
+           });
+       }
+   
+       const card = new Card({
+           card_name: req.body.card_name.trim(),
+           card_desc: req.body.card_desc.trim(),
+           card_price: req.body.card_price,
+           user_id: req.body.user_id,
+           img_url: generatedFilePath
+       });
+   
+       card.save()
+       .then(data => {
+           const card = cardsSerializer(data)
+           res.send(card);
+       }).catch(err => {
+           res.status(500).send({
+               message: err.message || "Some error occurred while creating the Card."
+           });
+       });
+        var obj = { 
+            myField1: req.body.card_name,
+            myField2: req.body.card_desc
+        };
+
+        console.log(obj);
+        // ...
+     });
+    
+
+//    form.parse(req, function(err, fields, files) {
+//     cardName = fields['card_name'][0];
+//     cardDesc = fields['card_desc'][0];
+//     cardPrice = fields['card_price'][0];
+//     userId = fields['user_id'][0];
+//     file = files['file'][0];
+//     console.log(file);
+
+// //    fs.writeFile("IMAGE-" + Date.now() + path.extname(file.originalFilename));
+    
+//     if(!cardName || !cardDesc || !cardPrice) {
+//          return res.status(400).send({
+//              message: "Name, Description and Price can not be empty"
+//          });
+//     }
+
+//     if (!userId) {
+//         return res.status(400).send({
+//             message: "Please check if you already log in."
+//         });
+//     }
+
+//     const card = new Card({
+//         card_name: cardName.trim(),
+//         card_desc: cardDesc.trim(),
+//         card_price: cardPrice,
+//         user_id: userId
+//     });
+
+//     card.save()
+//     .then(data => {
+//         const card = cardsSerializer(data)
+//         res.send(card);
+//     }).catch(err => {
+//         res.status(500).send({
+//             message: err.message || "Some error occurred while creating the Card."
+//         });
+//     });
+//    });
+
+    // const storage = multer.diskStorage({
+    //     destination: "./uploads/",
+    //     filename: function(req, file, cb){
+    //     cb(null,"IMAGE-" + Date.now() + path.extname(file.originalname));
+    //     }
+    // });
+    
+    // const upload = multer({
+    //     storage: storage,
+    //     limits:{fileSize: 1000000},
+    // }).single("file");
+    
+    // console.log(req.card_name);
+    // if(!req.body.card_name || !req.body.card_desc || !req.body.card_price) {
+    //      return res.status(400).send({
+    //          message: "Name, Description and Price can not be empty"
+    //      });
+    // }
+
+    // if (!req.body.user_id) {
+    //     return res.status(400).send({
+    //         message: "Please check if you already log in."
+    //     });
+    // }
+
+    // const card = new Card({
+    //     card_name: req.body.card_name.trim(),
+    //     card_desc: req.body.card_desc.trim(),
+    //     card_price: req.body.card_price,
+    //     user_id: req.body.user_id
+    // });
+
+    // card.save()
+    // .then(data => {
+    //     const card = cardsSerializer(data)
+    //     res.send(card);
+    // }).catch(err => {
+    //     res.status(500).send({
+    //         message: err.message || "Some error occurred while creating the Card."
+    //     });
+    // });
 };
 
 exports.update = (req, res) => {

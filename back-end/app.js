@@ -21,6 +21,9 @@ app.use(cors());
 // Logger Middleware
 app.use(morgan('dev'));
 // Bodyparser Middleware
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
 // DB Config
@@ -41,6 +44,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 app.use('/api/card', cardRouter);
 app.use('/api/bid', bidRouter);
+const directory = path.join(__dirname, 'uploads');
+console.log(directory);
+app.use('/uploads', express.static(directory));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

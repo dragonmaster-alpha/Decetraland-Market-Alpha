@@ -3,7 +3,7 @@ import axios from "axios";
 const http = axios.create({
   baseURL: 'http://localhost:3000/api/',
   headers: {
-    "Content-type": "application/json"
+    "Content-type": "application/json",
   }
 });
 
@@ -19,7 +19,7 @@ export default {
   user(url = 'user') {
       const config = {
         headers: {
-          'authorization': 'Bearer ' + localStorage.getItem('token')
+          'authorization': 'Bearer ' + localStorage.getItem('token'),
         }
       };
 
@@ -40,15 +40,23 @@ export default {
         'authorization': 'Bearer ' + localStorage.getItem('token')
       }
     };
+    const configForm = {
+      headers: {
+        'authorization': 'Bearer ' + localStorage.getItem('token'),
+        'content-type': 'multipart/form-data'
+      }
+    };
 
     return {
         fetchAll: () => http.get(url + '/list', config),
         fetchPagination: (page, limit) => 
             http.get(url + "?page=" + page + "&limit=" + limit, config),
         fetchById: id => http.get(url + "/" + id, config),
-        create: ({card_name, card_desc, card_price}) => http.post(url, {card_name, card_desc, card_price}, config),
+        // create: ({card_name, card_desc, card_price, user_id}) => http.post(url, {card_name, card_desc, card_price, user_id}, config),
+        create: (newRecord) => http.post(url, newRecord, configForm),
         update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
-        delete: id => http.delete(url + "/" + id, config)
+        delete: id => http.delete(url + "/" + id, config),
+        loadSubAll: () => http.get(url + "/sub-list", config),
     }
 },
 
