@@ -28,21 +28,6 @@ const Register = (props) => {
   // var [token, setToken] = useState(null);
   // var [authUser, setAuthUser] = useState(null);
 
-  const setLogin = (data) => {
-    if (data) {
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('authUser', JSON.stringify(data.user))
-      // setToken(data.token);
-      // setAuthUser(data.user);
-    }
-    else {
-      // setToken(null);
-      // setAuthUser(null);
-      localStorage.removeItem("token");
-      localStorage.removeItem("authUser");
-    }
-  }
-
   const handleRegister = () => {
     // setLogin(null);
 

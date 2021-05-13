@@ -13,7 +13,7 @@ const TheFooter = () => {
         <Link to="/code-ethics" className="text-decoration-none ml-3 footer-text-color">Code of Ethics</Link>
       </div>
       <div className="mfs-auto">
-        <span className="mr-1 footer-text-color">© 2021 Decentraland</span>
+        <span className="mr-1 footer-text-color">© 2021 Metrix</span>
       </div>
     </CFooter>
   )

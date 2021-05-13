@@ -22,10 +22,11 @@ import { GoogleLogin } from 'react-google-login';
 import { LinkedIn } from 'react-linkedin-login-oauth2';
 import linkedin from 'react-linkedin-login-oauth2/assets/linkedin.png'
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux'
 
 
 const Login = (props) => {
-
+  const dispatch = useDispatch();
   var [username, setUsername] = useState("");
   var [password, setPassword] = useState("");
   // var [token, setToken] = useState(null);
@@ -41,6 +42,7 @@ const Login = (props) => {
       localStorage.setItem('token', data.token)
       localStorage.setItem('authUser', JSON.stringify(data.user))
       localStorage.setItem('authType', '')
+      dispatch({type: 'SET_MANA', mana : data.user.mana});
       // setToken(data.token);
       // setAuthUser(data.user);
     }

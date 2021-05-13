@@ -28,6 +28,10 @@ const CardSchema = new Schema({
     enum: ['Pending', 'Sold', 'Active'],
     default: 'Active'
   },
+  owner: {
+      type: String,
+      default: 'no'
+  },
   register_date: {
     type: Date,
     default: Date.now

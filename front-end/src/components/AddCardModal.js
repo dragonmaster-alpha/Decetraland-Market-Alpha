@@ -21,9 +21,9 @@ import API from "../views/utils/api"
 
 const AddCardModal = (props) => {
     let history = useHistory();
-    const [cardname, setCardname] = useState(props.cName);
-    const [description, setDescription] = useState(props.cDesc);
-    const [price, setPrice] = useState(props.cPrice);
+    const [cardname, setCardname] = useState(props.cname);
+    const [description, setDescription] = useState(props.cdesc);
+    const [price, setPrice] = useState(props.cprice);
     const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
 
@@ -57,9 +57,9 @@ const AddCardModal = (props) => {
                 setCardname('');
                 setDescription('');
                 setPrice('');
-                history.push('/builder');
+                // history.push('/builder');
                 props.onHide();
-                props.getAddCardList(res.data);
+                props.getaddcardlist(res.data);
             }
             else {
               toast.error(res.data.message);

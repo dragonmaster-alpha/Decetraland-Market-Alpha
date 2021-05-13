@@ -1,30 +1,28 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  Redirect,
-  Route,
-  Switch
-} from 'react-router-dom'
-import { CContainer, CFade } from '@coreui/react'
-import { Link } from "react-router-dom";
-
-// routes config
-import routes from '../routes'
+  CButton
+} from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import EachSlider from './EachSlide'
-import API from "../views/utils/api"
+import API from "../utils/api"
+import Select from "react-dropdown-select";
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import { Link, useHistory } from "react-router-dom";
+import TabComponent from "../../components/TabComponent"
 import { useSelector, useDispatch } from 'react-redux'
-import { isAuthenticated } from '../App';
+import EachSlider from '../../components/EachSlide'
+import { isAuthenticated } from '../../App';
 
-const SlideShow = (props) => {
+const Browse = () => {
   const dispatch = useDispatch();
   const allCardList = useSelector(state => state.allCardList);
   let isLoggedIn = false;
   const getAllCardList = () => {
-    const usr = localStorage.getItem('authUser');
     isLoggedIn = isAuthenticated();
     if (isLoggedIn) {
         API.card().fetchAll()
         .then(res => {
+            console.log(res.data);
             dispatch({type: 'SET_ALL_CARD_LIST', allCardList: res.data});
         })
         .catch(err => console.log(err));
@@ -36,16 +34,22 @@ const SlideShow = (props) => {
   useEffect(() => {
     getAllCardList();
   }, [])
-
   return (
-      <div className="slide-show container">
-        <div className="header-menu">
-            <div className="header-menu-title title-style">{props.title}</div>
-            <div className="header-menu-view-all">
-            <Link to="/browse" className="text-decoration-none text-danger">
-                View all 
-                <CIcon name="cil-chevron-right" className="ml-1"/>
-            </Link>
+    <>
+        <TabComponent tabkind="browse" />
+        
+        <div className="container">
+        <div className="topbar">
+            <div className="TextFilter Filter">
+                <div className="text-input">
+                    <input placeholder="Search +1,000 results..." value="" />
+                </div>
+            </div>
+            <div className="topbar-filter">
+                <div className="ui checked toggle checkbox">
+                    <input className="hidden" readonly="" tabindex="0" type="radio" value="" />
+                    <label>On sale</label>
+                </div>
             </div>
         </div>
         {
@@ -73,7 +77,7 @@ const SlideShow = (props) => {
         }
         {
             allCardList.length !== 0 && (
-            <div className="slides-container">
+            <div className="browse-cards">
                 {
                     allCardList.map((card, idx) => (
                         <EachSlider key={idx} title={card.card_name} price={card.card_price} desc={card.card_desc} cid={card.id} imgurl={card.img_url.replace("\\", '/')} />
@@ -82,8 +86,12 @@ const SlideShow = (props) => {
             </div>
             )
         }
-      </div>
+        <div className="load-more">
+            <CButton className="ui inverted primary button">Load more</CButton>
+        </div>
+        </div>
+    </>
   )
 }
 
-export default React.memo(SlideShow)
+export default Browse

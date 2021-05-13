@@ -11,6 +11,8 @@ const cardsSerializer = data => ({
     card_desc: data.card_desc,
     card_price: data.card_price,
     img_url: data.img_url,
+    status: data.status,
+    owner: data.owner,
     register_date: data.register_date
 });
 
@@ -104,7 +106,7 @@ exports.create = (req, res) => {
     
     const upload = multer({
         storage: storage,
-        limits:{fileSize: 1000000},
+        limits:{fileSize: 10000000},
     }).fields([
         { name: 'file', maxCount: 1 }, 
     ]);

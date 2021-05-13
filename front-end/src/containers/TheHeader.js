@@ -23,23 +23,13 @@ import {
   TheHeaderDropdownNotif,
   // TheHeaderDropdownTasks
 }  from './index'
+import { isAuthenticated } from '../App';
 
 const TheHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector(state => state.sidebarShow)
-  let mana = 0;
-  let isLoggedIn = false;
-
-  const usr = localStorage.getItem('authUser');
-  if (usr !== null) {
-    const log_usr = JSON.parse(usr);
-    mana = log_usr.mana;
-    isLoggedIn = true;
-  }
-  const authType = localStorage.getItem('authType');
-  if(authType === 'google' || authType === 'linkedin'){
-    isLoggedIn = true;
-  }
+  const mana = useSelector(state => state.mana);
+  let isLoggedIn = isAuthenticated();
 
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
@@ -65,10 +55,12 @@ const TheHeader = () => {
       /> */}
       <CHeaderBrand to="/">
         <div className="logo-bkg"></div>
-        <span className="text-white font-weight-bold ml-4">MARKETPLACE</span>
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
+        <CHeaderNavItem className="px-3" >
+          <CHeaderNavLink to="/home" className="text-dark">MARKETPLACE</CHeaderNavLink>
+        </CHeaderNavItem>
         <CHeaderNavItem className="px-3" >
           <CHeaderNavLink to="/builder" className="text-dark">BUILDER</CHeaderNavLink>
         </CHeaderNavItem>

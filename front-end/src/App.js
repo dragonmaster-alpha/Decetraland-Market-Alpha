@@ -21,7 +21,7 @@ const Register = React.lazy(() => import('./views/auth/Register'));
 const Verify = React.lazy(() => import('./views/auth/Verify'));
 const SigninLinkedin = React.lazy(() => import('./views/auth/SigninLinkedin'));
 
-const isAuthenticated = () => {
+export const isAuthenticated = () => {
   //write your condition here
   const tken = localStorage.getItem("token")
   if (!tken) return false;
@@ -81,7 +81,7 @@ class App extends Component {
               <Route exact path="/confirm/:confirmationCode" name="Register Page" component={Verify} />
               <Route exact path="/signin-linkedin" name="Signin Linkedin Page" component={SigninLinkedin} />
               <Route  path="/" name="Home" component={TheLayout}/>
-              {/* <AuthentiRoutecatedRoute  path="/" name="Home" component={TheLayout}/> */}
+              {/* <AuthenticatedRoute  path="/" name="Home" component={TheLayout}/> */}
             </Switch>
           </React.Suspense>
       </BrowserRouter>

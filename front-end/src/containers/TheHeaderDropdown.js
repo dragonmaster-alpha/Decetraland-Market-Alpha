@@ -20,7 +20,7 @@ const TheHeaderDropdown = (props) => {
   const handleLogOut = () => {
       localStorage.clear();
       history.push('/');
-    }
+  }
   
   const authType = localStorage.getItem('authType');
   if(authType === 'google'){
@@ -50,7 +50,7 @@ const TheHeaderDropdown = (props) => {
       <CDropdownToggle className="c-header-nav-link" caret={false}>
         <div className="c-avatar">
           <CImg
-            src={'avatars/user-avatar.png'}
+            src={'/avatars/user-avatar.png'}
             className="c-avatar-img"
             alt=""
           />

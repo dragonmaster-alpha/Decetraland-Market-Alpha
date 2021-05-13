@@ -12,41 +12,30 @@ import { Link, useHistory } from "react-router-dom";
 import Card from '../../components/GameCard'
 import AddCardModal from '../../components/AddCardModal';
 import { useSelector, useDispatch } from 'react-redux'
+import { isAuthenticated } from '../../App';
 
 const Builder = () => {
     const history = useHistory();
     const [modalShow, setModalShow] = React.useState(false);
     const dispatch = useDispatch();
-    const [update, setUpdate] = React.useState(0);
     const cardList = useSelector(state => state.cardList);
 
     const getCardList = () => {
-        let isLoggedIn = false;
-        const usr = localStorage.getItem('authUser');
-        if (usr !== null) {
-            isLoggedIn = true;
-        }
-        const authType = localStorage.getItem('authType');
-        if(authType === 'google' || authType === 'linkedin'){
-            isLoggedIn = true;
-        }
+        let isLoggedIn = isAuthenticated();
         if (isLoggedIn) {
             API.card().loadSubAll()
             .then(res => {
-                console.log(res.data);
-                dispatch({type: 'set', cardList: res.data});
+                dispatch({type: 'SET_CARD_LIST', cardList: res.data});
             })
             .catch(err => console.log(err));
+        }
+        else {
+            dispatch({type: 'SET_CARD_LIST', cardList: []});
         }
     }
 
     const getAddCardList = (data) => {
-        console.log(data);
-        var array = cardList;
-        array.push(data);
-        dispatch({type: 'set', cardList: array});
-        console.log(cardList);
-        setUpdate(1);
+        dispatch({type: 'SET_CARD_LIST', cardList: [...cardList, data]});
     }
 
     useEffect(() => {
@@ -86,10 +75,10 @@ const Builder = () => {
                     <AddCardModal
                         show={modalShow}
                         onHide={() => setModalShow(false)}
-                        cName='' 
-                        cDesc=''
-                        cPrice='0'
-                        getAddCardList={getAddCardList}
+                        cname='' 
+                        cdesc=''
+                        cprice='0'
+                        getaddcardlist={getAddCardList}
                     />
                 </div>
             </div>
@@ -113,7 +102,7 @@ const Builder = () => {
                     <div className="card-list">
                     {
                         cardList.map((card, idx) => (
-                            <Card key={card.idx} title={card.card_name} price={card.card_price} cid={card.id} imgurl={card.img_url.replace("\\", "/")}/>
+                            <Card key={idx} title={card.card_name} price={card.card_price} cid={card.id} imgurl={card.img_url.replace("\\", "/")}/>
                         ))
                     }
                     </div>
