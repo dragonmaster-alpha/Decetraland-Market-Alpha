@@ -30,7 +30,8 @@ export default {
           fetchById: id => http.get(url + "/" + id, config),
           create: newRecord => http.post(url, newRecord, config),
           update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
-          delete: id => http.delete(url + "/" + id, config)
+          delete: id => http.delete(url + "/" + id, config),
+          updateMana: mana => http.post(url + "/update-mana", mana, config),
       }
   },
 
@@ -57,20 +58,32 @@ export default {
         update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
         delete: id => http.delete(url + "/" + id, config),
         loadSubAll: () => http.get(url + "/sub-list", config),
+        updateStatus: (newRecord) => http.post(url + "/update-status", newRecord, config),
+        getReceivedBid: () => http.get(url + "/get-received-bid", config),
     }
 },
 
-  track(url = 'track') {
-    const config = {
-      headers: {
-        'authorization': 'Bearer ' + localStorage.getItem('token')
-      }
-    };
-    return {
-      fetchPaginate: (team_id, page, limit, status, from, to) => http.get(url + '/list?id=' + team_id + '&page=' + page + '&limit=' + limit + '&status=' + status + '&from=' + from + '&to=' + to, config),
-      fetchCollections : () => http.get(url + '/collections', config),
-      fetchTimeHistory: (team_id) => http.get(url + '/timehistory?id=' + team_id, config)
+  bid(url = 'bid') {
+  const config = {
+    headers: {
+      'authorization': 'Bearer ' + localStorage.getItem('token')
     }
+  };
+
+  return {
+      fetchAll: () => http.get(url + '/list', config),
+      fetchPagination: (page, limit) => 
+          http.get(url + "?page=" + page + "&limit=" + limit, config),
+      fetchById: id => http.get(url + "/" + id, config),
+      // create: ({card_name, card_desc, card_price, user_id}) => http.post(url, {card_name, card_desc, card_price, user_id}, config),
+      create: (newRecord) => http.post(url, newRecord, config),
+      update: (id, updatedRecord) => http.put(url + "/" + id, updatedRecord, config),
+      delete: id => http.delete(url + "/" + id, config),
+      getMatchedBid: (newRecord) => http.post(url + "/get-bid", newRecord, config),
+      updateOrCreate: (newRecord) => http.post(url + "/update", newRecord, config),
+      getPlacedBid: () => http.get(url + "/get-placed-bid", config),
+      getReceivedBid: () => http.get(url + "/get-received-bid", config),
   }
+},
 
 }

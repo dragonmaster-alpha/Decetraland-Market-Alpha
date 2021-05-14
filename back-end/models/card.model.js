@@ -3,10 +3,10 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 // Create Schema
 const CardSchema = new Schema({
-  user_id: {
-    type: String,
-    required: true
-  },
+//   user_id: {
+//     type: String,
+//     required: true
+//   },
   card_name: {
     type: String,
     required: true
@@ -30,7 +30,8 @@ const CardSchema = new Schema({
   },
   owner: {
       type: String,
-      default: 'no'
+      default: 'no',
+      required: true
   },
   register_date: {
     type: Date,
@@ -41,6 +42,6 @@ const CardSchema = new Schema({
 });
 
 CardSchema.plugin(mongoosePaginate);
-const Card = model('card', CardSchema);
+const Card = model('card', CardSchema, 'card');
 
 export default Card;

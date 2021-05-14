@@ -16,28 +16,72 @@ import {
 import CIcon from '@coreui/icons-react'
 import API from "../utils/api"
 import { toast } from 'react-toastify';
+import { useSelector, useDispatch } from 'react-redux'
 
 const Register = (props) => {
 
   // const  register  = useContext(AuthContext)
-
+  const dispatch = useDispatch();
   var [username, setUsername] = useState("");
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
   var [passwordRepeat, setPasswordRepeat] = useState("");
+  const [isValid, setIsValid] = useState(false);
   // var [token, setToken] = useState(null);
   // var [authUser, setAuthUser] = useState(null);
+
+  const setLogin = (data) => {
+    if (data) {
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('authUser', JSON.stringify(data.user))
+      localStorage.setItem('authType', '')
+      dispatch({type: 'SET_MANA', mana : data.user.mana});
+      // setToken(data.token);
+      // setAuthUser(data.user);
+    }
+    else {
+      // setToken(null);
+      // setAuthUser(null);
+      localStorage.clear()
+    }
+  }
 
   const handleRegister = () => {
     // setLogin(null);
 
     if (email !== "" && username !== "" && password !== "") {
       if(password === passwordRepeat){
+        setIsValid(false);
         API.auth().register({ email, username, password })
           .then(res => {
             // setLogin(res.data);
             toast.success(res.data.message);
-            props.history.push('/');
+///Added on the 14th of May
+        API.auth().login({ username, password })
+          .then(res => {
+              // console.log("res : ", JSON.stringify(res.data))
+              if (res.status === 200 && res.data) {
+                setLogin(res.data)
+                // toast.success("Log in successful!")
+                props.history.push('/')
+                return true
+              }
+              else {
+                toast.error(res.data.message);
+                return false
+              }
+          })
+          .catch(err => {
+
+              if (err.response)
+                toast.error(err.response.data.message)
+              else {
+                toast.error(err)
+              }
+              return false
+          });
+
+            // props.history.push('/');
           })
           .catch(err => {
             toast.error(err.response.data.error);
@@ -49,6 +93,7 @@ const Register = (props) => {
       
     } 
     else {
+      setIsValid(true);
       toast.error('Please enter all fields!');
     }
   }
@@ -69,13 +114,13 @@ const Register = (props) => {
                         <CIcon name="cil-user" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" autoComplete="username" required/>
+                    <CInput type="text" value={username} className={ username || isValid ? ' ' : 'validate-input'} onChange={e => setUsername(e.target.value)} placeholder="Username" autoComplete="username" required/>
                   </CInputGroup>  
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
-                      <CInputGroupText>@</CInputGroupText>
+                      <CInputGroupText><span style={{width: '16px', height: '16px', marginBottom: '4px'}}>@</span></CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" autoComplete="email" required/>
+                    <CInput type="email" value={email} className={ email || isValid ? ' ' : 'validate-input'} onChange={e => setEmail(e.target.value)} placeholder="Email" autoComplete="email" required/>
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -83,7 +128,7 @@ const Register = (props) => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" autoComplete="new-password" required/>
+                    <CInput type="password" value={password} className={ password || isValid ? ' ' : 'validate-input'} onChange={e => setPassword(e.target.value)} placeholder="Password" autoComplete="new-password" required/>
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupPrepend>
@@ -91,7 +136,7 @@ const Register = (props) => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <CInput type="password" value={passwordRepeat} onChange={e => setPasswordRepeat(e.target.value)} placeholder="Repeat password" autoComplete="new-password" required/>
+                    <CInput type="password" value={passwordRepeat} className={ passwordRepeat || isValid ? ' ' : 'validate-input'} onChange={e => setPasswordRepeat(e.target.value)} placeholder="Repeat password" autoComplete="new-password" required/>
                   </CInputGroup>
                   <CButton onClick={handleRegister} color="success" block>Create Account</CButton>
                   <br/>

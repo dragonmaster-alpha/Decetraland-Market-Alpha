@@ -19,9 +19,9 @@ const Builder = () => {
     const [modalShow, setModalShow] = React.useState(false);
     const dispatch = useDispatch();
     const cardList = useSelector(state => state.cardList);
+    const isLoggedIn = isAuthenticated();
 
     const getCardList = () => {
-        let isLoggedIn = isAuthenticated();
         if (isLoggedIn) {
             API.card().loadSubAll()
             .then(res => {
@@ -42,17 +42,6 @@ const Builder = () => {
         getCardList();
     }, [])
     const handleClick = () => {
-        const usr = localStorage.getItem('authUser');
-        let isLoggedIn = false;
-        if (usr !== null) {
-            let log_usr = JSON.parse(usr);
-            isLoggedIn = true;
-        }
-        const authType = localStorage.getItem('authType');
-        if(authType === 'google' || authType === 'linkedin'){
-            isLoggedIn = true;
-        }
-
         if (isLoggedIn)
         {
             setModalShow(true);
@@ -83,22 +72,34 @@ const Builder = () => {
                 </div>
             </div>
             {
-                (cardList.length === 0) && (
+                !cardList.length ? (
                     <>
                     <div className="CardList">
                         <div className="empty-projects">
                             <div>
+                            {
+                                isLoggedIn && (
+                                    <>
                                 It looks like you don't have any Cards.
                                 <br/>
                                 <span onClick={handleClick}>Click here</span> to get started.
+                                </>
+                                )
+                            }
+                            {
+                                !isLoggedIn && (
+                                    <>
+                                It looks like you didn't log in.
+                                <br/>
+                                <span onClick={handleClick}>Click here</span> to get started.
+                                </>
+                                )
+                            }
                             </div>
                         </div>
                     </div>
                     </>
-                )
-            }
-            {
-                (cardList.length) && (
+                ) : (
                     <div className="card-list">
                     {
                         cardList.map((card, idx) => (

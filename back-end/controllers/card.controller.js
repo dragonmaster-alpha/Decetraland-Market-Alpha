@@ -6,7 +6,7 @@ const multiparty = require('multiparty');
 
 const cardsSerializer = data => ({
     id: data.id,
-    user_id: data.user_id,
+    // user_id: data.user_id,
     card_name: data.card_name,
     card_desc: data.card_desc,
     card_price: data.card_price,
@@ -33,7 +33,7 @@ exports.findAll =  (req, res) => {
 // Retrieve all data
 exports.findAllByUserID =  (req, res) => {
     console.log(req.headers);
-    Card.find({user_id: req.user.id})
+    Card.find({owner: req.user.id})
     .then(async data => {
         const cards = await Promise.all(data.map(cardsSerializer));
         console.log(cards);
@@ -71,6 +71,58 @@ exports.findPagination = async (req, res) => {
     res.json({ meta, cards });
 };
 
+exports.getReceivedBid = (req, res) => {
+    console.log('asfdher');
+    if (!req.user.id) {
+        return res.status(400).send({
+            message: "User should log in first."
+        });
+    }
+
+    Card.aggregate([
+        // {
+        //     $project: {
+        //         'id': card_details.id,
+        //         // user_id: data.user_id,
+        //         'card_name': card_details.card_name,
+        //         'card_desc': card_details.card_desc,
+        //         'card_price': card_details.card_price,
+        //         'img_url': card_details.img_url,
+        //         'status': card_details.status,
+        //         'owner': card_details.owner,
+        //         'register_date': card_details.register_date
+        //     }
+        // },
+        {
+            $match: {
+                owner: req.user.id
+            }
+        },
+        {
+            $addFields: {
+                cardID : {$toString : '$_id'}
+            }
+        },
+        {
+            $lookup: {
+                from: 'bid',
+                localField: 'cardID',
+                foreignField: 'card_id',
+                as: 'bid_details'
+            }
+        }
+    ]).then(async data => {
+        console.log(data);
+        const cards = await Promise.all(data.map(cardsSerializer));
+        // const user = bidsSerializer(data)
+        res.send(cards);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving the placed bids."
+        });
+    });
+};
+
 exports.findOne = (req, res) => {
     Card.findById(req.params.id)
         .then(data => {
@@ -84,11 +136,11 @@ exports.findOne = (req, res) => {
         }).catch(err => {
             if(err.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: "User not found with id " + req.params.id
+                    message: "Card not found with id " + req.params.id
                 });
             }
             return res.status(500).send({
-                message: "Error retrieving user with id " + req.params.id
+                message: "Error retrieving card with id " + req.params.id
             });
         });
 };
@@ -134,7 +186,8 @@ exports.create = (req, res) => {
            card_name: req.body.card_name.trim(),
            card_desc: req.body.card_desc.trim(),
            card_price: req.body.card_price,
-           user_id: req.body.user_id,
+        //    user_id: req.body.user_id,
+           owner: req.body.user_id,
            img_url: generatedFilePath
        });
    
@@ -239,6 +292,37 @@ exports.create = (req, res) => {
     //     });
     // });
 };
+
+exports.updateByID = (req, res) => {
+    if(!req.user.id || !req.body.status) {
+        return res.status(400).send({
+            message: "Owner, and Status can not be empty"
+        });
+    }
+
+    Card.findOneAndUpdate({_id:req.body.id/*, status: {$ne: 'Sold'}*/}, {
+        owner: req.user.id,
+        status: req.body.status,
+    }, {new: true})
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "Card not found with id " + req.body.id
+            });
+        }
+        const card = cardsSerializer(data)
+        res.send(card);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "Card not found with id " + req.body.id
+            });
+        }
+        return res.status(500).send({
+            message: "Error updating card with id " + req.params.id
+        });
+    });
+}
 
 exports.update = (req, res) => {
     if(!req.body.card_name || !req.body.card_desc || !req.body.card_price ) {

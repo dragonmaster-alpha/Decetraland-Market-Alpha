@@ -13,22 +13,22 @@ import { useSelector, useDispatch } from 'react-redux'
 import EachSlider from '../../components/EachSlide'
 import { isAuthenticated } from '../../App';
 
-const Browse = () => {
+const MyAssets = () => {
   const dispatch = useDispatch();
-  const allCardList = useSelector(state => state.allCardList);
+  const myCards = useSelector(state => state.myCards);
   const isLoggedIn = isAuthenticated();
   const getAllCardList = () => {
-    // if (isLoggedIn) {
-        API.card().fetchAll()
+    if (isLoggedIn) {
+        API.card().loadSubAll()
         .then(res => {
             console.log(res.data);
-            dispatch({type: 'SET_ALL_CARD_LIST', allCardList: res.data});
+            dispatch({type: 'SET_MY_CARDS', myCards: res.data});
         })
         .catch(err => console.log(err));
-    // }
-    // else {
-    //     dispatch({type: 'SET_ALL_CARD_LIST', allCardList: []});
-    // }
+    }
+    else {
+        dispatch({type: 'SET_MY_CARDS', myCards: []});
+    }
   }
   useEffect(() => {
     console.log(isLoggedIn);
@@ -36,7 +36,7 @@ const Browse = () => {
   }, [])
   return (
     <>
-        <TabComponent tabkind="browse" />
+        <TabComponent tabkind="myassets" />
         
         <div className="container">
         <div className="topbar">
@@ -47,22 +47,18 @@ const Browse = () => {
             </div>
         </div>
         {
-            !allCardList.length ? (
+            !myCards.length ? (
                 <>
                 <div className="CardList">
                     <div className="empty-projects">
                         <div>
-                        It looks like there aren't any cards available.
-                            {/* {
-                                isLoggedIn && (
-                                "It looks like there aren't any cards available."
-                                )
-                            }
                             {
-                                !isLoggedIn && (    
+                                isLoggedIn ? (
+                                "It looks like there aren't any cards available."
+                                ) : (    
                                     "You should log in first."
                                 )
-                            } */}
+                            }
                             <br/>
                         </div>
                     </div>
@@ -71,7 +67,7 @@ const Browse = () => {
             ) : (
             <div className="browse-cards">
                 {
-                    allCardList.map((card, idx) => (
+                    myCards.map((card, idx) => (
                         <EachSlider key={idx} title={card.card_name} price={card.card_price} desc={card.card_desc} owner={card.owner} cid={card.id} imgurl={card.img_url.replace("\\", '/')} />
                     ))
                 }
@@ -86,4 +82,4 @@ const Browse = () => {
   )
 }
 
-export default Browse
+export default MyAssets

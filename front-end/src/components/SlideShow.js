@@ -18,23 +18,16 @@ import { isAuthenticated } from '../App';
 const SlideShow = (props) => {
   const dispatch = useDispatch();
   const allCardList = useSelector(state => state.allCardList);
-  let isLoggedIn = false;
   const getAllCardList = () => {
-    const usr = localStorage.getItem('authUser');
-    isLoggedIn = isAuthenticated();
-    if (isLoggedIn) {
-        API.card().fetchAll()
-        .then(res => {
-            dispatch({type: 'SET_ALL_CARD_LIST', allCardList: res.data});
-        })
-        .catch(err => console.log(err));
-    }
-    else {
-        dispatch({type: 'SET_ALL_CARD_LIST', allCardList: []});
-    }
+    API.card().fetchAll()
+    .then(res => {
+        dispatch({type: 'SET_ALL_CARD_LIST', allCardList: res.data});
+    })
+    .catch(err => console.log(err));
   }
   useEffect(() => {
     getAllCardList();
+    console.log(allCardList)
   }, [])
 
   return (
@@ -49,34 +42,22 @@ const SlideShow = (props) => {
             </div>
         </div>
         {
-            !allCardList.length && (
+            !allCardList.length ? (
                 <>
                 <div className="CardList">
                     <div className="empty-projects">
                         <div>
-                            {
-                                isLoggedIn && (
-                                "It looks like there aren't any cards available."
-                                )
-                            }
-                            {
-                                !isLoggedIn && (    
-                                    "You should log in first."
-                                )
-                            }
+                            It looks like there aren't any cards available.
                             <br/>
                         </div>
                     </div>
                 </div>
                 </>
-            )
-        }
-        {
-            allCardList.length !== 0 && (
+            ) : (
             <div className="slides-container">
                 {
                     allCardList.map((card, idx) => (
-                        <EachSlider key={idx} title={card.card_name} price={card.card_price} desc={card.card_desc} cid={card.id} imgurl={card.img_url.replace("\\", '/')} />
+                        <EachSlider key={idx} title={card.card_name} price={card.card_price} desc={card.card_desc} owner={card.owner} cid={card.id} imgurl={card.img_url.replace("\\", '/')} />
                     ))
                 }
             </div>

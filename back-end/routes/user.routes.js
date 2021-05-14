@@ -21,4 +21,7 @@ userRouter.put('/:id', jwt, userController.update);
 // Delete
 userRouter.delete('/:id', jwt, userController.delete);
 
+//Update mana
+userRouter.post('/update-mana', jwt, userController.updateMana);
+
 export default userRouter;

@@ -670,6 +670,7 @@ a.text-dark:hover, a.text-dark:focus {
     text-align: center;
     margin-top: 36px;
     height: 46px;
+    visibility: hidden;
 }
 
 .ui.button.inverted.primary {
@@ -864,6 +865,11 @@ a.text-dark:hover, a.text-dark:focus {
     margin-left: 16px;
 }
 
+.detail-wrapper .back-url {
+    margin-top: 0;
+    margin-bottom: 5vh;
+}
+
 .back-url {
     background-image: url(../assets/img/back.svg);
     background-repeat: no-repeat;
@@ -942,4 +948,181 @@ a.text-dark:hover, a.text-dark:focus {
 .button-group .btn-bid {
     background: #ff2d55;
     color: white;
+}
+
+.bid-wrapper .error {
+    color: white;
+}
+
+.form-group {
+    max-width: 100%;
+    position: relative;
+}
+
+.form-fields {
+    max-width: 420px;
+    margin-bottom: 20px;
+}
+
+.form-field {
+    clear: both;
+    margin: 0 0 1em;
+}
+
+.form-fields .form-field {
+    min-width: 400px;
+    position: relative;
+}
+
+.form-field > .form-sub-header {
+    margin-bottom: 8px;
+    color: #676370;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.form-field .form-input {
+    width: 100%;
+    font-size: 1em;
+    position: relative;
+    font-weight: 400;
+    display: inline-flex;
+}
+
+.form-field .form-input input {
+    color: white;
+    background: transparent;
+    padding: 4px 0 12px;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 500;
+    border: none;
+    border-bottom: 2px solid rgba(103,99,112,.2);
+    border-radius: 0;
+    transition: color .1s ease,border-color .1s ease;
+}
+
+.form-field .form-control:focus {
+    color:white;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid white;
+    box-shadow: none;
+}
+
+.error-message {
+    color: red;
+    margin-top: 8px;
+    font-size: 16px;
+}
+
+.has-error .form-sub-header {
+    color: red;
+}
+
+.has-error .form-control:focus, .has-error .form-control {
+    border-bottom: 2px solid red;
+}
+
+.form-field .show-warning {
+    opacity: 1;
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cGF0aCBkPSJNMCAwaDI0djI0SDB6Ii8+PHBhdGggZmlsbD0icmVkIiBkPSJNMTIgMjRDNS4zNzMgMjQgMCAxOC42MjcgMCAxMlM1LjM3MyAwIDEyIDBzMTIgNS4zNzMgMTIgMTItNS4zNzMgMTItMTIgMTJ6bTAtMmM1LjUyMyAwIDEwLTQuNDc3IDEwLTEwUzE3LjUyMyAyIDEyIDIgMiA2LjQ3NyAyIDEyczQuNDc3IDEwIDEwIDEwem0wLTE2YTEgMSAwIDAxMSAxdjZhMSAxIDAgMDEtMiAwVjdhMSAxIDAgMDExLTF6bTAgMTBhMSAxIDAgMTEwIDIgMSAxIDAgMDEwLTJ6Ii8+PC9nPjwvc3ZnPg==);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 36px;
+    cursor: default;
+    position: absolute;
+    line-height: 1;
+    text-align: center;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 100%;
+    width: 2.67142857em;
+    border-radius: 0 .28571429rem .28571429rem 0;
+    transition: opacity .3s ease;
+}
+
+.sub-title {
+    margin-bottom: 32px;
+}
+
+.show-warning, .error-message {
+    visibility: hidden;
+}
+
+.has-error .show-warning, .has-error .error-message {
+    visibility: visible;
+}
+
+.input-group .validate-input {
+    border-color: #d8dbe0 !important;
+    background-image: none !important;
+}
+
+.right-wrapper .owner-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    border: solid 2px #d8dbe0;
+    padding: 4px 8px;
+}
+
+.card-action {
+    margin-top: 4px;
+}
+
+.card-action .show-owner {
+    background-color: rgb(132, 45, 218);
+    font-size: 14px;
+    line-height: 18px;
+    color: #fff;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    max-width: 100px;
+    padding: 3px 6px;
+    border-radius: 4px;
+}
+
+.bid-header-menu {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+.bid-header-menu > .bid-header-menu-left {
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
+}
+
+.bid-sub-header {
+    text-transform: none;
+    color: #676370;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.bids-container {
+    margin-bottom: 48px;
+}
+
+.bids-container .center {
+    position: relative;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #676370;
+}
+
+.bidder-name, .bid-price {
+    margin-left: 20px;
+    width: 60px;
+    text-overflow: ellipsis;
 }

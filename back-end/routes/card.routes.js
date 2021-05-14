@@ -4,10 +4,15 @@ const cardRouter = Router();
 const cardController = require('../controllers/card.controller.js');
 
 // Retrieve All data
-cardRouter.get('/list', jwt, cardController.findAll);
+cardRouter.get('/list', cardController.findAll);
 
 // Find all by User ID
 cardRouter.get('/sub-list', jwt, cardController.findAllByUserID);
+
+cardRouter.get('/get-received-bid', jwt, cardController.getReceivedBid);
+
+// Update
+cardRouter.post('/update-status', jwt, cardController.updateByID);
 
 // Retrieve data with pagination
 cardRouter.get('/', cardController.findPagination);

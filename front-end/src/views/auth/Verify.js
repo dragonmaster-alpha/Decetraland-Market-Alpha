@@ -38,7 +38,7 @@ const Verify = (props) => {
             <CCard className="mx-4">
               <CCardBody className="p-4">
                   {
-                      confirmStatus && (
+                      confirmStatus ? (
                         <div>
                             <h2>Acount Email Confirmed!</h2>
                             <br/>
@@ -46,10 +46,7 @@ const Verify = (props) => {
                                 <CButton color="primary" block>Please Login</CButton>
                             </Link>
                         </div>
-                      )
-                  }
-                  {
-                      !confirmStatus && (
+                      ) : (
                         <div>
                             <h2>Acount Email Confirmation Failed!</h2>
                             <br/>

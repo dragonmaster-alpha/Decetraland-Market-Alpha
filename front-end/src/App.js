@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { HashRouter, Route, Switch, Redirect, BrowserRouter } from 'react-router-dom';
+import React, { Component, useEffect } from 'react';
+import { HashRouter, Route, Switch, Redirect, BrowserRouter, useLocation, withRouter } from 'react-router-dom';
 import './scss/style.scss';
 import { toast } from 'react-toastify';
 import jwt from 'jwt-decode'
@@ -47,6 +47,14 @@ const UnauthenticatedRoute = ({ component: Component, ...rest }) => (
   )} />
 );
 
+const _ScrollToTop = (props) => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+      window.scrollTo(0, 0);
+  }, [pathname]);
+  return props.children
+}
+
 
 const AuthenticatedRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -55,6 +63,8 @@ const AuthenticatedRoute = ({ component: Component, ...rest }) => (
       : <Redirect to='/login' />
   )} />
 );
+
+const ScrollToTop = withRouter(_ScrollToTop)
 
 class App extends Component {
 
@@ -73,6 +83,7 @@ class App extends Component {
         pauseOnHover
       />
       <BrowserRouter>
+      <ScrollToTop>
           <React.Suspense fallback={loading}>
             <Switch>
               {/* <UnauthenticatedRoute  exact path="/login" name="Login Page" component={Login} /> */}
@@ -84,6 +95,7 @@ class App extends Component {
               {/* <AuthenticatedRoute  path="/" name="Home" component={TheLayout}/> */}
             </Switch>
           </React.Suspense>
+          </ScrollToTop>
       </BrowserRouter>
       </>
     );

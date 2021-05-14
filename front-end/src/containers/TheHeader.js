@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom";
 import {
@@ -24,6 +24,7 @@ import {
   // TheHeaderDropdownTasks
 }  from './index'
 import { isAuthenticated } from '../App';
+import Api from "../views/utils/api"
 
 const TheHeader = () => {
   const dispatch = useDispatch()
@@ -40,6 +41,23 @@ const TheHeader = () => {
     const val = [false, 'responsive'].includes(sidebarShow) ? true : 'responsive'
     dispatch({type: 'set', sidebarShow: val})
   }
+
+  useEffect(() => {
+    if (isAuthenticated()) {
+      let userId = 0;
+      const usr = localStorage.getItem('authUser');
+      if (usr !== null) {
+          let log_usr = JSON.parse(usr);
+          userId = log_usr.id;
+      }
+      Api.user().fetchById(userId)
+      .then(res => {
+        console.log(res);
+        dispatch({type: 'SET_MANA', mana: res.data.mana});
+    })
+    .catch(err => console.log(err));
+    }
+  }, [])
 
   return (
     <CHeader withSubheader className="bg-black container position-absolute">
@@ -82,7 +100,7 @@ const TheHeader = () => {
       </CHeaderNav>
 
       {
-        isLoggedIn && (
+        isLoggedIn ? (
         <CHeaderNav className="pl-3">
           {/* <TheHeaderDropdownNotif/>
           <TheHeaderDropdownTasks/>
@@ -93,10 +111,7 @@ const TheHeader = () => {
           </div>
           <TheHeaderDropdown/>
         </CHeaderNav>   
-        )
-      }
-      {
-        !isLoggedIn && (
+        ) : (
         <CHeaderNav className="px-3">
           <Link to="/login" className="text-decoration-none text-dark mr-4">SIGN IN</Link>
           <Link to="/register" className="text-decoration-none text-dark">SIGN UP</Link>

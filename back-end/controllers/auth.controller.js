@@ -37,7 +37,7 @@ exports.login =  async (req, res) => {
           id: user._id,
           username: user.username,
           email: user.email,
-          team_id : user.team_id,
+          // team_id : user.team_id,
           mana: user.mana
         }
       });
@@ -71,13 +71,13 @@ exports.register =  async (req, res) => {
       const tkn = jwt.sign({email: email}, JWT_SECRET);
 
       const datenow = Date.now().toString();
-      const team_id = 'wa-' + datenow;
+      // const team_id = 'wa-' + datenow;
 
       const newUser = new User({
         username,
         email,
         password: hash,
-        team_id,
+        // team_id,
         confirmationCode: tkn
       });
 

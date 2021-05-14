@@ -4,16 +4,21 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 // Create Schema
 const BidSchema = new Schema({
   user_id: {
-    type: Number,
+    type: String,
     required: true
   },
   card_id: {
-    type: Number,
+    type: String,
     required: true
   },
   bid_price: {
     type: Number,
-    required: true
+    required: true,
+    default: 1,
+  },
+  expire_date: {
+      type: String,
+      required: true,
   },
   status: {
     type: String, 

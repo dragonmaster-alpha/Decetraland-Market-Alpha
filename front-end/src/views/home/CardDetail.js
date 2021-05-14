@@ -17,23 +17,30 @@ import { isAuthenticated } from '../../App';
 import TabComponent from "../../components/TabComponent"
 
 const CardDetail = (props) => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const cardDetail = useSelector(state => state.cardDetail);
+    const [userID, setUserID] = useState('');
+    const isLoggedIn = isAuthenticated();
+    const [ownerName, setOwnerName] = useState('');
 
-    const getCardDetail = () => {
-        let isLoggedIn = isAuthenticated();
-        if (isLoggedIn) {
+    const getCardDetail = async () => {
+        // if (isLoggedIn) {
             console.log(props.match.params.id);
-            API.card().fetchById(props.match.params.id)
+            const usr = localStorage.getItem('authUser');
+            if (usr !== null) {
+                let log_usr = JSON.parse(usr);
+                setUserID(log_usr.id);
+            }
+            await API.card().fetchById(props.match.params.id)
             .then(res => {
-                console.log(res);
-                dispatch({type: 'SET_CARD_DETAIL', cardDetail: res.data});
+                dispatch({type: 'SET_CARD_DETAIL', cardDetail : res.data});
+                API.user().fetchById(res.data.owner).then((res) => {
+                    setOwnerName(res.data.username);
+                }).catch(err => console.log(err));
             })
             .catch(err => console.log(err));
-        }
-        else {
-            dispatch({type: 'SET_CARD_DETAIL', cardDetail: {}});
-        }
+            console.log(cardDetail.owner);
     }
 
     useEffect(() => {
@@ -42,6 +49,12 @@ const CardDetail = (props) => {
     return (
         <>
             <TabComponent tabkind="" />
+            
+            <div className="container detail-wrapper">
+            <CButton onClick={() => history.goBack()} className="text-decoration-none">
+                <div className="back-url"></div>
+            </CButton>
+            </div>
             <div className="full-width-image">
                 <CImg src={`http://localhost:3000/${cardDetail.img_url}`} 
                 alt="thumbnail"
@@ -54,8 +67,11 @@ const CardDetail = (props) => {
                             {cardDetail.card_name}
                         </div>
                     </div>
-                    {/* <div className="right-wrapper">
-                    </div> */}
+                    <div className="right-wrapper">
+                        <div className="owner-name">
+                        {ownerName}
+                        </div>
+                    </div>
                 </div>
                 <div className="row-description">
                     <div className="sub-desc-caption">Description</div>
@@ -78,10 +94,14 @@ const CardDetail = (props) => {
                     </div>
                     <div className="right-wrapper">
                         {
-                            cardDetail.status !== "Sold" && (
+                            cardDetail.owner !== userID ? (
                                 <>
                                 <Link to={ isAuthenticated() ? "/buy/" + props.match.params.id : "/login"} className="text-decoration-none btn-buy">Buy</Link>
                                 <Link to={ isAuthenticated() ? "/bid/" + props.match.params.id : "/login"} className="text-decoration-none btn-bid">Bid</Link>
+                                </>
+                            ) : (
+                                <>
+                                You are the Owner.
                                 </>
                             )
                         }

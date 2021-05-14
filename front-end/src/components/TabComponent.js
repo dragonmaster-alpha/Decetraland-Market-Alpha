@@ -36,11 +36,11 @@ const TabComponent = (props) => {
                 }
                 </div>
               </Link>
-              <Link href="/bids" className="text-decoration-none">
+              <Link to="/mybids" className="text-decoration-none">
                 <div className="dcl tab ">
                 My Bids
                 {
-                  props.tabkind === "bids" && ( 
+                  props.tabkind === "mybids" && ( 
                 <div className="active-bar"></div>
                 )
                 }

@@ -38,7 +38,7 @@ mongoose
   }) // Adding new mongo url parser
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
-
+  mongoose.set('useFindAndModify', false);
 // Use Routes
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);

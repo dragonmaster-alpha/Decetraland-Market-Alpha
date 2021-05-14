@@ -4,7 +4,7 @@ const usersSerializer = data => ({
     id: data.id,
     username: data.username,
     email: data.email,
-    team_id: data.team_id,
+    // team_id: data.team_id,
     register_date: data.register_date,
     mana: data.mana ? data.mana : 0,
 });
@@ -144,4 +144,58 @@ exports.delete = (req, res) => {
              message: "Could not delete user with id " + req.params.id
          });
      });
+};
+
+
+exports.updateMana = (req, res) => {
+    console.log(req.body.mana);
+    if(!req.user.id || !req.body.mana ) {
+        return res.status(400).send({
+            message: "Name and Mana can not be empty"
+        });
+    }
+
+    User.findByIdAndUpdate(req.user.id, {
+        $inc: {mana: -req.body.mana}
+    }, {new: true})
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "User not found with id " + req.user.id
+            });
+        }
+        const user = usersSerializer(data)
+        res.send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.user.id
+            });
+        }
+        return res.status(500).send({
+            message: "Error updating user with id " + req.user.id
+        });
+    });
+
+    User.findByIdAndUpdate(req.body.id, {
+        $inc: {mana: req.body.mana}
+    }, {new: true})
+    .then(data => {
+        if(!data) {
+            return res.status(404).send({
+                message: "User not found with id " + req.body.id
+            });
+        }
+        const user = usersSerializer(data)
+        res.send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.body.id
+            });
+        }
+        return res.status(500).send({
+            message: "Error updating user with id " + req.body.id
+        });
+    });
 };

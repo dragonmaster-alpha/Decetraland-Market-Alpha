@@ -16,14 +16,15 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  team_id: {
-    type: String,
-    required: true
-  },
+  // team_id: {
+  //   type: String,
+  //   required: true
+  // },
   status: {
     type: String, 
     enum: ['Pending', 'Active'],
-    default: 'Pending'
+    // default: 'Pending'
+    default: 'Active',
   },
   confirmationCode: { 
     type: String, 
